@@ -1,0 +1,42 @@
+{
+  "name": "obj2fs-hooks",
+  "version": "0.0.0",
+  "description": "A set of hooks that can be injected into your functional components to enhance their behavior. Specifically, to make these components persistable to file system as JSON strings.",
+  "main": "lib/obj2fs-hooks.js",
+  "scripts": {
+    "prepublish": "rm -rf ./lib && babel src --out-dir lib",
+    "test": "rm -rf ./lib && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/echowaves/obj2fs-hooks.git"
+  },
+  "keywords": [
+    "persist",
+    "storage",
+    "file system",
+    "HOC"
+  ],
+  "author": "Dmitry Amelchenko <dmitry@echowaves.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/echowaves/obj2fs-hooks/issues"
+  },
+  "homepage": "https://github.com/echowaves/obj2fs-hooks#readme",
+  "dependencies": {
+    "fs-extra": "9.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.10.5",
+    "@babel/core": "7.10.5",
+    "@babel/plugin-proposal-class-properties": "7.10.4",
+    "@babel/preset-env": "7.10.4",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.5.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jest": "23.18.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "jest": "26.1.0"
+  }
+}
