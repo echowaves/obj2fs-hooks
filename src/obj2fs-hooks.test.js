@@ -73,4 +73,32 @@ describe('ObjectInTest', () => {
       expect(newObjects.prop2).toBe(3)
     })
   })
+
+  describe('objectInTest.stringify()', () => {
+    it('should generate valid JSON string representing the `ObjectInTest` instance', () => {
+      const jsonObjectInTest = objectInTest.stringify()
+      expect(typeof jsonObjectInTest).toBe('string')
+      expect('{"prop1":"","prop2":2,"prop3":"three"}')
+        .toEqual(jsonObjectInTest)
+    })
+  })
+
+  describe('ObjectInTest.parse()', () => {
+    it('should generate an `ObjectInTest` instance from JSON', () => {
+      const jsonObjectInTest = objectInTest.stringify()
+
+      const generatedObjectInTest = new ObjectInTest().parse(jsonObjectInTest)
+
+      expect(generatedObjectInTest.stringify()).toBe(objectInTest.stringify())
+
+      // check if the loaded object responds to methods calls after re-construction from JSON
+      generatedObjectInTest.incProp2()
+      expect(generatedObjectInTest.prop2).toEqual(3)
+    })
+    it('should fail to generate an `ObjectInTest` object from wrong JSON', () => {
+      expect(() => {
+        new ObjectInTest().parse('{ some: json }')
+      }).toThrowError('Unexpected token s in JSON at position 2')
+    })
+  })
 })
