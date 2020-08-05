@@ -21,10 +21,10 @@ function Account({ publicKey } = { publicKey: '' }) {// have to make publicKey o
     this.balance += amount
   }
 
-	return Object.assign(
-		this,
-		Obj2fsHooks(this),
-	)
+  return Object.assign(
+    this,
+    Obj2fsHooks(this),
+  )
 }
 
 export default Account // exporting enhanced Account
