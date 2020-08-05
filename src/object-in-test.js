@@ -1,16 +1,18 @@
-import Obj2fsHOC from './obj2fs-hoc'
+import Obj2fsHooks from './obj2fs-hooks'
 
-class ObjectInTest {
-  // have to make publicKey optional for json2Obj HOC to work
-  constructor({prop1} = {prop1: ''}) {
-    this.prop1 = prop1
-    this.prop2 = 2
-    this.prop3 = 'three'
-  }
+function ObjectInTest({prop1} = {prop1: ''}) {
+  this.prop1 = prop1
+  this.prop2 = 2
+  this.prop3 = 'three'
 
-  incProp2() {
+  this.incProp2 = function() {
     this.prop2 += 1
   }
+
+  return Object.assign(
+    this,
+    Obj2fsHooks(this),
+  )
 }
 
-export default Obj2fsHOC(ObjectInTest)
+export default ObjectInTest
