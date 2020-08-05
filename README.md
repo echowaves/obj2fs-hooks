@@ -29,7 +29,7 @@ function Account({ publicKey } = { publicKey: '' }) {// have to make publicKey o
 
 export default Account // exporting enhanced Account
 ```
-Wrapping ```Account``` with ```Json2ObjHOC``` adds 5 methods to ```Account``` type.
+Enhancing ```Account``` with ```Obj2fsHooks``` adds 5 methods to ```Account``` type.
 
 ```stringify()``` which is self explanatory -- returns JSON string representation of the object.
 
