@@ -1,6 +1,6 @@
 {
   "name": "obj2fs-hooks",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A set of hooks that can be injected into your functional components to enhance their behavior. Specifically, to make these components persistable to file system as JSON strings.",
   "main": "lib/obj2fs-hooks.js",
   "scripts": {
@@ -19,7 +19,8 @@
     "Json2Object",
     "hooks",
     "stringify",
-    "parse"
+    "parse",
+    "composition"
   ],
   "author": "Dmitry Amelchenko <dmitry@echowaves.com>",
   "license": "MIT",
