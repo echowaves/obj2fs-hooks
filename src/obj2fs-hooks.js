@@ -16,8 +16,7 @@ const Obj2fsHooks = state => ({
   /* store object in fs, key === file_name */
   store(key) {
     const json = this.stringify()
-    fs.ensureFileSync(path.resolve(key))
-    fs.writeFileSync(path.resolve(key), json)
+    fs.outputFileSync(path.resolve(key), json)
     return json
   },
 
@@ -32,7 +31,7 @@ const Obj2fsHooks = state => ({
   /*  retrieve object from fs, key === file_name, or return new Object initialized with default constructor() */
   retrieveOrNew(key) {
     if (!fs.existsSync(path.resolve(key))) {
-      fs.writeFileSync(path.resolve(key), this.stringify())
+      fs.outputFileSync(path.resolve(key), this.stringify())
     }
     return this.parse(fs.readFileSync(path.resolve(key)))
   },
