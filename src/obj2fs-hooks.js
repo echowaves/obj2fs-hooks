@@ -2,6 +2,11 @@ const path = require('path')
 const fs = require('fs-extra')
 
 const Obj2fsHooks = state => ({
+  // must call this function to attach object to store by key
+  setKey(KEY) {
+    this.KEY = KEY
+    return this
+  },
   /* returns JSON String representation of the object */
   stringify() {
     return JSON.stringify(state)
@@ -14,26 +19,26 @@ const Obj2fsHooks = state => ({
   },
 
   /* store object in fs, key === file_name */
-  store(key) {
+  store() {
     const json = this.stringify()
-    fs.outputFileSync(path.resolve(key), json)
+    fs.outputFileSync(path.resolve(this.KEY), json)
     return json
   },
 
   /* retrieve object from fs, key === file_name */
-  retrieve(key) {
-    if (!fs.existsSync(path.resolve(key))) {
+  retrieve() {
+    if (!fs.existsSync(path.resolve(this.KEY))) {
       throw new Error('No such key or file name found on disk')
     }
-    return this.parse(fs.readFileSync(path.resolve(key)))
+    return this.parse(fs.readFileSync(path.resolve(this.KEY)))
   },
 
   /*  retrieve object from fs, key === file_name, or return new Object initialized with default constructor() */
-  retrieveOrNew(key) {
-    if (!fs.existsSync(path.resolve(key))) {
-      fs.outputFileSync(path.resolve(key), this.stringify())
+  retrieveOrNew() {
+    if (!fs.existsSync(path.resolve(this.KEY))) {
+      fs.outputFileSync(path.resolve(this.KEY), this.stringify())
     }
-    return this.parse(fs.readFileSync(path.resolve(key)))
+    return this.parse(fs.readFileSync(path.resolve(this.KEY)))
   },
 })
 

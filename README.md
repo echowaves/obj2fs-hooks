@@ -29,7 +29,10 @@ function Account({ publicKey } = { publicKey: '' }) {// have to make publicKey o
 
 export default Account // exporting enhanced Account
 ```
-Enhancing ```Account``` with ```Obj2fsHooks``` adds 5 methods to ```Account``` type.
+Enhancing ```Account``` with ```Obj2fsHooks``` adds 6 methods to ```Account``` type.
+
+```setKey(KEY)``` which associates an Object with a KEY (path on disk), returns this so can be chained
+
 
 ```stringify()``` which is self explanatory -- returns JSON string representation of the object.
 
@@ -37,13 +40,13 @@ Enhancing ```Account``` with ```Obj2fsHooks``` adds 5 methods to ```Account``` t
 ```parse(json)``` which returns object instance of correct type.
 
 
-```store(key)``` which saves `this` object as JSON string to disk with name `key`. It will create the file if it does not exist.
+```store()``` which saves `this` object as JSON string to disk with name `KEY`. It will create the file if it does not exist.
 
 
-```retrieve(key)``` which loads object instance of correct type from disk. If the file is not found it will throw exception. ```throw new Error('No such key or file name found on disk')```
+```retrieve()``` which loads object instance of correct type from disk. If the file is not found it will throw exception. ```throw new Error('No such key or file name found on disk')```
 
 
-```retrieveOrNew(key)``` which loads object instance of correct type from disk. If the file is not found it will create a new file contents of an object initialized with default constructor and then return it. This method should never fail.
+```retrieveOrNew()``` which loads object instance of correct type from disk. If the file is not found it will create a new file contents of an object initialized with default constructor and then return it. This method should never fail.
 
 
 Here are examples how to use the ```Account``` object:
@@ -66,11 +69,11 @@ generatedAccount.addBalance({ amount })
 console.log(generatedAccount.balance) // ----> 200
 
 // here is how to store/retrieve account by key
-jsonAccount = account.store(key)
+jsonAccount = account.setKey(key).store()
 // jsonAccount will be saved to disk as JSON string
 
 // now let's re-created another instance of the Account object from file on disk
-generatedAccount = new Account().retrieve(key)
+generatedAccount = new Account().setKey(key).retrieve()
 // can still call the addBalance method, because the object is of the right type
 generatedAccount.addBalance({ amount })
 

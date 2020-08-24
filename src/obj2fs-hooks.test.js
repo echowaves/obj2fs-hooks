@@ -3,38 +3,38 @@ const path = require('path')
 const fs = require('fs-extra')
 
 describe('ObjectInTest', () => {
-  const key = './.test/obj.json'
+  const KEY = './.test/obj.json'
   let objectInTest
   beforeEach(() => {
-    objectInTest = new ObjectInTest()
+    objectInTest = new ObjectInTest().setKey(KEY)
   })
 
-  describe('objectInTest.store(key)', () => {
+  describe('objectInTest.store()', () => {
     beforeEach(() => {
-      fs.removeSync(path.resolve(key))
+      fs.removeSync(path.resolve(KEY))
     })
 
-    it('should generate file with `key`', () => {
-      expect(fs.existsSync(key)).toBe(false)
-      objectInTest.store(key)
-      expect(fs.existsSync(key)).toBe(true)
+    it('should generate file with `KEY`', () => {
+      expect(fs.existsSync(KEY)).toBe(false)
+      objectInTest.store()
+      expect(fs.existsSync(KEY)).toBe(true)
     })
     it('should return json string', () => {
-      expect(fs.existsSync(key)).toBe(false)
-      const jsonObjectInTest = objectInTest.store(key)
+      expect(fs.existsSync(KEY)).toBe(false)
+      const jsonObjectInTest = objectInTest.store()
       expect(typeof jsonObjectInTest).toBe('string')
-      expect('{"prop1":"","prop2":2,"prop3":"three"}')
+      expect('{"prop1":"","prop2":2,"prop3":"three","KEY":"./.test/obj.json"}')
         .toEqual(jsonObjectInTest) })
   })
 
   describe('objectInTest.retrieve(key)', () => {
     beforeEach(() => {
       objectInTest.incProp2()
-      objectInTest.store(key)
+      objectInTest.store()
     })
 
     it('should retrieve file named `key`', () => {
-      const retrievedObject = new ObjectInTest().retrieve(key)
+      const retrievedObject = new ObjectInTest().setKey(KEY).retrieve()
       expect(retrievedObject.constructor.name).toBe("ObjectInTest")
       expect(retrievedObject.prop1).toBe('')
       expect(retrievedObject.prop2).toBe(3) // this value is different from default and should be retrieved from file
@@ -43,19 +43,19 @@ describe('ObjectInTest', () => {
       expect(retrievedObject.prop2).toBe(4)
     })
     it('should fail to retrieve file  that does not exist', () => {
-      fs.removeSync(`${key}-non_existing_key`)
+      fs.removeSync(`${KEY}-non_existing_key`)
       expect(() => {
-        new ObjectInTest().retrieve('non_existing_key')
+        new ObjectInTest().setKey(`${KEY}-non_existing_key`).retrieve()
       }).toThrowError('No such key or file name found on disk')
     })
   })
 
   describe('ObjectInTest.retrieveOrNew(key)', () => {
     beforeEach(() => {
-      objectInTest.store(key)
+      objectInTest.store()
     })
     it('should retrieve file named `key`', () => {
-      const retrievedObject = new ObjectInTest().retrieveOrNew(key)
+      const retrievedObject = new ObjectInTest().setKey(KEY).retrieveOrNew()
       expect(retrievedObject.constructor.name).toBe("ObjectInTest")
       expect(retrievedObject.prop1).toBe('')
       expect(retrievedObject.prop2).toBe(2)
@@ -64,8 +64,8 @@ describe('ObjectInTest', () => {
       expect(retrievedObject.prop2).toBe(3)
     })
     it('should create new instance when file does not exist', () => {
-      fs.removeSync(`${key}-non_existing_key`)
-      const newObjects = new ObjectInTest().retrieveOrNew(`${key}-non_existing_key`)
+      fs.removeSync(`${KEY}-non_existing_key`)
+      const newObjects = new ObjectInTest().setKey(`${KEY}-non_existing_key`).retrieveOrNew()
       expect(newObjects.prop1).toBe('')
       expect(newObjects.prop2).toBe(2)
       expect(newObjects.prop3).toBe('three')
@@ -78,7 +78,7 @@ describe('ObjectInTest', () => {
     it('should generate valid JSON string representing the `ObjectInTest` instance', () => {
       const jsonObjectInTest = objectInTest.stringify()
       expect(typeof jsonObjectInTest).toBe('string')
-      expect('{"prop1":"","prop2":2,"prop3":"three"}')
+      expect('{"prop1":"","prop2":2,"prop3":"three","KEY":"./.test/obj.json"}')
         .toEqual(jsonObjectInTest)
     })
   })
