@@ -27,7 +27,7 @@ describe('ObjectInTest', () => {
         .toEqual(jsonObjectInTest) })
   })
 
-  describe('objectInTest.retrieve(key)', () => {
+  describe('ObjectInTest.retrieve(key)', () => {
     beforeEach(() => {
       objectInTest.incProp2()
       objectInTest.store()
