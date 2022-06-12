@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/echowaves/obj2fs-hooks#readme",
   "dependencies": {
-    "fs-extra": "9.0.1"
+    "fs-extra": "^10.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.10.5",
